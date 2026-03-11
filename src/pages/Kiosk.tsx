@@ -280,7 +280,7 @@ export default function Kiosk() {
                   </div>
                 </div>
 
-                <Button className="w-full mt-4 font-extrabold text-base h-12 rounded-xl">
+                <Button className="w-full mt-4 font-extrabold text-base h-12 rounded-xl" onClick={handlePlaceOrder}>
                   Place Order
                 </Button>
               </>
