@@ -130,7 +130,7 @@ export function runApriori(
   }
 
   rules.sort((a, b) => b.confidence - a.confidence);
-  return { frequentItemsets, rules };
+  return { frequentItemsets: allFrequent, rules };
 }
 
 // Parse CSV: expects either a single column of comma-separated items per row,
