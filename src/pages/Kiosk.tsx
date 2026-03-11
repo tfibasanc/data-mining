@@ -370,7 +370,7 @@ export default function Kiosk() {
                   <span>Total</span>
                   <span className="text-primary">₱{cartTotal.toFixed(2)}</span>
                 </div>
-                <Button className="w-full mt-4 font-extrabold text-base h-12 rounded-xl" onClick={() => setShowCart(false)}>
+                <Button className="w-full mt-4 font-extrabold text-base h-12 rounded-xl" onClick={() => { handlePlaceOrder(); setShowCart(false); }}>
                   Place Order
                 </Button>
               </>
