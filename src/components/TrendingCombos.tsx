@@ -1,5 +1,5 @@
 import { useAnalysis } from "@/context/AnalysisContext";
-import { Flame, Zap, Download } from "lucide-react";
+import { Zap, Download } from "lucide-react";
 import { exportCombosCSV } from "@/lib/export-utils";
 
 const itemIcon: Record<string, string> = {
