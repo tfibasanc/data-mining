@@ -1,6 +1,6 @@
 import { useAnalysis } from "@/context/AnalysisContext";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { BarChart3 } from "lucide-react";
+
 
 export const TopCombinationsChart = () => {
   const { topCombinations } = useAnalysis();
