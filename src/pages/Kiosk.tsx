@@ -28,7 +28,7 @@ function getPrice(name: string): number {
 }
 
 export default function Kiosk() {
-  const { menuItems, upsellMap, trendingCombos } = useAnalysis();
+  const { menuItems, upsellMap, trendingCombos, runAnalysis } = useAnalysis();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
 
