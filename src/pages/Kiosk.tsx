@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useAnalysis } from "@/context/AnalysisContext";
-import { ShoppingCart, Plus, Minus, Trash2, Sparkles, X } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CartItem {
