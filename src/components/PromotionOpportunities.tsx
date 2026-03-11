@@ -7,9 +7,6 @@ export const PromotionOpportunities = () => {
   return (
     <section className="mb-10">
       <div className="kiosk-section-title">
-        <div className="bg-primary/10 p-2 rounded-xl">
-          <Gift className="w-5 h-5 text-primary" />
-        </div>
         <h2>🎁 Promotion Opportunities</h2>
       </div>
       {promotions.length === 0 ? (

@@ -9,9 +9,6 @@ export const AssociationRulesTable = () => {
   return (
     <section className="mb-10">
       <div className="kiosk-section-title">
-        <div className="bg-primary/10 p-2 rounded-xl">
-          <TableProperties className="w-5 h-5 text-primary" />
-        </div>
         <h2>📋 Association Rules</h2>
         {associationRules.length > 0 && (
           <button
