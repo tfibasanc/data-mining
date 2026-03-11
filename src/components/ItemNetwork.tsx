@@ -1,5 +1,5 @@
 import { useAnalysis } from "@/context/AnalysisContext";
-import { Share2 } from "lucide-react";
+
 
 export const ItemNetwork = () => {
   const { networkNodes, networkEdges } = useAnalysis();
