@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import { runApriori, parseCSV, type Rule, type FrequentItemset } from "@/lib/apriori";
+import { apiEnabled, runAnalysisOnServer, fetchAnalysis, type ApiAnalysisResult } from "@/lib/api";
 import type {
   MenuItem, ComboPattern, AssociationRule, Promotion,
   NetworkNode, NetworkEdge,
@@ -64,20 +65,8 @@ export function AnalysisProvider({ children }: { children: ReactNode }) {
   });
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const runAnalysis = useCallback((csvText: string) => {
-    setIsAnalyzing(true);
-
-    // Run async to not block UI
-    setTimeout(() => {
-      try {
-        const transactions = parseCSV(csvText);
-        if (transactions.length === 0) {
-          setIsAnalyzing(false);
-          return;
-        }
-
-        const { frequentItemsets, rules } = runApriori(transactions, 2, 25, 4);
-
+  const processResults = useCallback(
+    (transactions: string[][], frequentItemsets: FrequentItemset[], rules: Rule[]) => {
         // Extract unique items
         const uniqueItems = new Set<string>();
         transactions.forEach((t) => t.forEach((item) => uniqueItems.add(item)));
@@ -125,7 +114,7 @@ export function AnalysisProvider({ children }: { children: ReactNode }) {
           estimatedIncrease: +(r.lift * 2.8).toFixed(0),
         }));
 
-        // Upsell map: for each item, find rules where it's the antecedent
+        // Upsell map
         const upsellMap: Record<string, { name: string; icon: string; confidence: number }[]> = {};
         for (const item of menuItems) {
           const matching = rules
@@ -194,13 +183,44 @@ export function AnalysisProvider({ children }: { children: ReactNode }) {
           topCombinations,
           associationRules,
         });
+  }, []);
+
+  const runAnalysis = useCallback((csvText: string) => {
+    setIsAnalyzing(true);
+
+    const transactions = parseCSV(csvText);
+    if (transactions.length === 0) {
+      setIsAnalyzing(false);
+      return;
+    }
+
+    if (apiEnabled()) {
+      // Use Python backend
+      runAnalysisOnServer(transactions)
+        .then((result) => {
+          processResults(transactions, result.frequentItemsets, result.rules);
+        })
+        .catch((err) => {
+          console.warn("API failed, falling back to in-browser analysis:", err);
+          const { frequentItemsets, rules } = runApriori(transactions, 2, 25, 4);
+          processResults(transactions, frequentItemsets, rules);
+        })
+        .finally(() => setIsAnalyzing(false));
+    } else {
+      // In-browser fallback
+      setTimeout(() => {
+        try {
+          const { frequentItemsets, rules } = runApriori(transactions, 2, 25, 4);
+          processResults(transactions, frequentItemsets, rules);
+
       } catch (e) {
         console.error("Analysis error:", e);
       } finally {
         setIsAnalyzing(false);
       }
     }, 100);
-  }, []);
+    }
+  }, [processResults]);
 
   return (
     <AnalysisContext.Provider value={{ ...state, isAnalyzing, runAnalysis }}>
