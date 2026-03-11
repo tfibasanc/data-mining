@@ -1,6 +1,6 @@
 import { useAnalysis } from "@/context/AnalysisContext";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { TableProperties, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { exportRulesCSV } from "@/lib/export-utils";
 
 export const AssociationRulesTable = () => {
