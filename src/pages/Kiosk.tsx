@@ -85,10 +85,7 @@ export default function Kiosk() {
         <div className="kiosk-empty">
           <span className="text-6xl block mb-4">🖥️</span>
           <h2 className="text-xl font-extrabold mb-2">Kiosk Not Available</h2>
-          <p className="text-sm mb-4">Upload transaction data on the Dashboard first to populate the kiosk menu with AI-powered suggestions.</p>
-          <Button onClick={loadSampleData} className="font-bold">
-            <Sparkles className="w-4 h-4 mr-2" /> Load Sample Data
-          </Button>
+          <p className="text-sm">Upload transaction data on the Dashboard first to populate the kiosk menu with AI-powered suggestions.</p>
         </div>
       </div>
     );
